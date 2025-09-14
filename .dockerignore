@@ -1,0 +1,17 @@
+# Node modules
+node_modules
+
+# Logs
+var/*
+
+# Git
+.git
+.gitignore
+
+# Dockerfiles ou configs locales
+docker-compose.override.yml
+Dockerfile.local
+
+# IDE configs
+.idea
+.vscode
