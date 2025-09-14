@@ -1,10 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register!{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block body %}
-<p>
-  Go back home <a href="{{ path('app_home') }}">home</a>
-</p>
-  {{ form(form) }}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <h1 class="h3 mb-4 text-center">📝 Create your account</h1>
+
+                    <p class="text-muted text-center mb-4">
+                        Register by uploading an image.
+                        You’ll receive a <strong>stamped image</strong> that you must keep safe —
+                        it will be required to log in.
+                    </p>
+
+                    {{ form_start(form, { attr: { enctype: 'multipart/form-data', class: 'needs-validation' } }) }}
+                        <div class="mb-3">
+                            {{ form_label(form.username, 'Username', { label_attr: { class: 'form-label fw-semibold' } }) }}
+                            {{ form_widget(form.username, { attr: { class: 'form-control' } }) }}
+                            {{ form_errors(form.username) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.image, 'Profile Image', { label_attr: { class: 'form-label fw-semibold' } }) }}
+                            {{ form_widget(form.image, { attr: { class: 'form-control', accept: '.png,.jpg,.jpeg' } }) }}
+                            <div class="form-text">
+                                This image will be <strong>encoded</strong>.
+                                Keep the stamped version to authenticate later.
+                            </div>
+                            {{ form_errors(form.image) }}
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit"  name="{{ form.save.vars.full_name }}" class="btn btn-outline-success btn-lg">
+                                <i class="bi bi-person-plus"></i> Register
+                            </button>
+                        </div>
+                        <div class="visually-hidden">{{ form_rest(form) }}</div>
+                    {{ form_end(form) }}
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <a href="{{ path('app_login') }}" class="text-decoration-none">
+                            Already have an account? <strong>Sign in</strong>
+                        </a>
+                        <br>
+                        <a href="{{ path('app_home') }}" class="text-muted small">
+                            ← Back to home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

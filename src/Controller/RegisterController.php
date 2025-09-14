@@ -20,9 +20,9 @@ class RegisterController extends AbstractController
     #[Route(path: '/register', name: 'app_register')]
     public function register(AuthManager $authManager, EntityManagerInterface $entityManager, Request $request): Response
     {
-        // $request->getSession()->remove('user_id');
-        // $request->getSession()->remove('username');
-        // $request->getSession()->remove('user_image');
+        $request->getSession()->remove('user_id');
+        $request->getSession()->remove('username');
+        $request->getSession()->remove('user_image');
         $form = $this->createFormBuilder()
            ->add('username', TextType::class, [
                'required' => true,
@@ -38,9 +38,7 @@ class RegisterController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userData = $form->getData();
-            // var_dump($userData);
-            // exit;
+            $userData  = $form->getData();
             $authStamp = $authManager->stamp($userData['image']->getPathname());
 
             $user = new User();

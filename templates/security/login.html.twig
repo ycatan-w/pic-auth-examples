@@ -1,35 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block body %}
-<p>
-  Go back home <a href="{{ path('app_home') }}">home</a>
-</p>
-    <form method="post" enctype="multipart/form-data">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <h1 class="h3 mb-4 text-center">🔐 Sign in with your stamped image</h1>
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Username</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-        <label for="image">Image</label>
-        <input type="file" name="_image" id="image" class="form-control" accept=".png,.jpg,.jpeg" required>
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
 
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-semibold">Username</label>
+                            <input
+                                type="text"
+                                value="{{ last_username }}"
+                                name="_username"
+                                id="username"
+                                class="form-control"
+                                autocomplete="username"
+                                required
+                                autofocus
+                            >
+                        </div>
 
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
+                        <div class="mb-3">
+                            <label for="image" class="form-label fw-semibold">Stamped Image</label>
+                            <input
+                                type="file"
+                                name="_image"
+                                id="image"
+                                class="form-control"
+                                accept=".png,.jpg,.jpeg"
+                                required
+                            >
+                            <div class="form-text">
+                                Upload the <strong>stamped image</strong> you received during registration.
+                            </div>
+                        </div>
+
+                        <input
+                            type="hidden"
+                            name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <div class="d-grid">
+                            <button class="btn btn-outline-primary btn-lg" type="submit">
+                                <i class="bi bi-box-arrow-in-right"></i> Sign in
+                            </button>
+                        </div>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <a href="{{ path('app_register') }}" class="text-decoration-none">
+                            Don’t have an account? <strong>Register here</strong>
+                        </a>
+                        <br>
+                        <a href="{{ path('app_home') }}" class="text-muted small">
+                            ← Back to home
+                        </a>
+                    </div>
+                </div>
             </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

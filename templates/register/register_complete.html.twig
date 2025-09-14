@@ -1,25 +1,69 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Registered!{% endblock %}
+{% block title %}Registration Successful{% endblock %}
 
 {% block body %}
-<p>
-  Save the following image to be able to login. After saving your image you will be able to <a href="{{ path('app_login') }}">login</a>
-</p>
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Image</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ id }}</td>
-      <td>{{ username }}</td>
-      <td><img style="max-width: 100px; max-height: 100px;" src="data:image/png;base64, {{ image }}" /></td>
-    </tr>
-  </tbody>
-</table>
+<style>
+.hover-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.position-relative:hover .hover-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+</style>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body text-center p-5">
+                    <h1 class="h4 mb-4 text-success">✅ Registration Complete</h1>
+
+                    <p class="mb-4 text-muted">
+                        Save the image below — it is your personal <strong>login key</strong>.
+                        You’ll need this image every time you log in.
+                        <span class="text-danger">⚠️ Without it, you won’t be able to access your account.</span>
+                    </p>
+
+                    <div class="mb-4 position-relative d-inline-block">
+                      <img src="data:image/png;base64, {{ image }}"
+                        alt="Stamped login image"
+                        class="img-fluid rounded shadow-sm border"
+                        style="max-height: 250px;" />
+
+                        <a href="data:image/png;base64,{{ image }}" download="stamped-image.png"
+                          class="btn btn-secondary btn-sm position-absolute translate-middle top-0 start-100 hover-btn d-flex align-items-center" style="gap: 0.25rem;">
+                            <i class="bi bi-download"></i> Download
+                        </a>
+                    </div>
+
+                    <ul class="list-group list-group-flush text-start mb-4">
+                        <li class="list-group-item">
+                            <strong>User ID:</strong> {{ id }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Username:</strong> {{ username }}
+                        </li>
+                    </ul>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <a href="{{ path('app_login') }}" class="text-decoration-none">
+                            <i class="bi bi-box-arrow-in-right"></i> Go to Login
+                        </a>
+                        <br>
+                        <a href="{{ path('app_home') }}" class="text-muted small">
+                            ← Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
