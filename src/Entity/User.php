@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Crayon\PicAuthBundle\User\PicAuthenticatedUserInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
-class User implements UserInterface
+class User implements UserInterface, PicAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,6 +26,12 @@ class User implements UserInterface
      */
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $hash = null;
 
     public function getId(): ?int
     {
@@ -78,8 +87,9 @@ class User implements UserInterface
      */
     public function __serialize(): array
     {
-        $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+        $data                                 = (array) $this;
+        $data["\0" . self::class . "\0token"] = hash('crc32c', $this->token);
+        $data["\0" . self::class . "\0hash"]  = hash('crc32c', $this->hash);
 
         return $data;
     }
@@ -88,5 +98,29 @@ class User implements UserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function getToken(): string
+    {
+        return $this->token ?? '';
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getHash(): string
+    {
+        return $this->hash ?? '';
+    }
+
+    public function setHash(string $hash): static
+    {
+        $this->hash = $hash;
+
+        return $this;
     }
 }
