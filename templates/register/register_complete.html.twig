@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registered!{% endblock %}
+
+{% block body %}
+<p>
+  Save the following image to be able to login. After saving your image you will be able to <a href="{{ path('app_login') }}">login</a>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ id }}</td>
+      <td>{{ username }}</td>
+      <td><img style="max-width: 100px; max-height: 100px;" src="data:image/png;base64, {{ image }}" /></td>
+    </tr>
+  </tbody>
+</table>
+{% endblock %}

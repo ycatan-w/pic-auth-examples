@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register!{% endblock %}
+
+{% block body %}
+<p>
+  Go back home <a href="{{ path('app_home') }}">home</a>
+</p>
+  {{ form(form) }}
+{% endblock %}

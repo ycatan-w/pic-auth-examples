@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+  {% if user.username is defined %}
+  Hi {{ user.username }}, you are logged. You can <a href="{{ path('_logout_main') }}">logout</a>
+  {% else %}
+  You are not logged in. You can either <a href="{{ path('app_login') }}">login</a> or <a href="{{ path('app_register') }}">register</a>.
+  {% endif %}
+{% endblock %}
