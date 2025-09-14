@@ -3,10 +3,21 @@
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:ycatan-w/pic-auth-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ycatan-w/pic-auth.git"
+        }
+    ],
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "crayon/pic-auth-bundle": "^0.0.0",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.16",
         "doctrine/doctrine-migrations-bundle": "^3.4",
